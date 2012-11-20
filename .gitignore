@@ -1,0 +1,16 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#idea files
+*.iml
+*.ipr
+*.iws
+
+#gradle build dirs
+.gradle
+build
+generatedJava
