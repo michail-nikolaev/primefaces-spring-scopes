@@ -7,15 +7,10 @@
 </h:head>
 <h:body>
     <h:form prependId="false">
-        <p:spinner/>
         <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
                      paginator="true" rows="10"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
-            <f:facet name="header">
-                Ajax Pagination
-            </f:facet>
-
             <p:column>
                 <f:facet name="header">
                     <h:outputText value="Model"/>
