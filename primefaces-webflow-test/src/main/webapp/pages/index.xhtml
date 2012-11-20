@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Spring and Primefaces</title>
+</h:head>
+<h:body>
+    <h:form prependId="false">
+        <p:spinner/>
+        <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
+                     paginator="true" rows="10"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15">
+            <f:facet name="header">
+                Ajax Pagination
+            </f:facet>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Model"/>
+                </f:facet>
+                <h:outputText value="#{car.model}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Year"/>
+                </f:facet>
+                <h:outputText value="#{car.year}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Manufacturer"/>
+                </f:facet>
+                <h:outputText value="#{car.manufacturer}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Color"/>
+                </f:facet>
+                <h:outputText value="#{car.color}"/>
+            </p:column>
+        </p:dataTable>
+
+    </h:form>
+</h:body>
+</html>
