@@ -6,7 +6,7 @@
         <property name="scopes">
             <map>
                 <entry key="view">
-                    <bean class="org.nkey.primefaces.webflow.test.spring.scope.ViewScope"/>
+                    <bean class="org.nkey.primefaces.scopes.test.spring.scope.ViewScope"/>
                 </entry>
             </map>
         </property>

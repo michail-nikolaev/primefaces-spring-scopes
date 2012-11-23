@@ -1,8 +1,8 @@
-package org.nkey.primefaces.webflow.test.jsf;
+package org.nkey.primefaces.scopes.test.jsf;
 
-import org.nkey.primefaces.webflow.test.spring.Car;
-import org.nkey.primefaces.webflow.test.spring.CarRepository;
-import org.nkey.primefaces.webflow.test.spring.scope.ViewsScopedComponent;
+import org.nkey.primefaces.scopes.test.spring.Car;
+import org.nkey.primefaces.scopes.test.spring.CarRepository;
+import org.nkey.primefaces.scopes.test.spring.scope.ViewsScopedComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

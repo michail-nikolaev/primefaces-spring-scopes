@@ -1,4 +1,4 @@
-package org.nkey.primefaces.webflow.test.spring.scope;
+package org.nkey.primefaces.scopes.test.spring.scope;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;

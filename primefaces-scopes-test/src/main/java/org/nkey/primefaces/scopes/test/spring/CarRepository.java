@@ -1,4 +1,4 @@
-package org.nkey.primefaces.webflow.test.spring;
+package org.nkey.primefaces.scopes.test.spring;
 
 import org.springframework.stereotype.Repository;
 

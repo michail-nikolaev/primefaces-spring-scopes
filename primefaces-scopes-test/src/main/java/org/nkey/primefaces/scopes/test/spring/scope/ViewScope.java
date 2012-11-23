@@ -1,4 +1,4 @@
-package org.nkey.primefaces.webflow.test.spring.scope;
+package org.nkey.primefaces.scopes.test.spring.scope;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

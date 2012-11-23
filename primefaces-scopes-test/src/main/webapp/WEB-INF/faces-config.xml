@@ -11,8 +11,8 @@
     </application>
 
     <!--<application>-->
-    <!--<navigation-handler>org.springframework.webflow.executor.jsf.FlowNavigationHandler</navigation-handler>-->
-    <!--<variable-resolver>org.springframework.webflow.executor.jsf.DelegatingFlowVariableResolver</variable-resolver>-->
+    <!--<navigation-handler>org.springframework.scopes.executor.jsf.FlowNavigationHandler</navigation-handler>-->
+    <!--<variable-resolver>org.springframework.scopes.executor.jsf.DelegatingFlowVariableResolver</variable-resolver>-->
     <!--</application>-->
 
 

@@ -1,4 +1,4 @@
-package org.nkey.primefaces.webflow.test;
+package org.nkey.primefaces.scopes.test;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;

@@ -39,6 +39,6 @@ subprojects {
         testCompile group: 'org.springframework', name: 'spring-test', version: "$springVersion"
     }
 
-    group = 'org.nkey.primefaces.webflow.test'
+    group = 'org.nkey.primefaces.scopes.test'
     version = '0.1-SNAPSHOT'
 }

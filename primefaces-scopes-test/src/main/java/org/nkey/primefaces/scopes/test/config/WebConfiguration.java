@@ -1,6 +1,6 @@
-package org.nkey.primefaces.webflow.test.config;
+package org.nkey.primefaces.scopes.test.config;
 
-import org.nkey.primefaces.webflow.test.BasePackageMarker;
+import org.nkey.primefaces.scopes.test.BasePackageMarker;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

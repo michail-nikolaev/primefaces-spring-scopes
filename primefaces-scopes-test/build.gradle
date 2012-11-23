@@ -25,7 +25,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: "$springVersion"
     compile group: 'org.springframework', name: 'spring-aspects', version: "$springVersion"
 
-//    compile group: 'org.springframework.webflow', name: 'spring-webflow', version: "$webflowVersion"
+//    compile group: 'org.springframework.scopes', name: 'spring-scopes', version: "$webflowVersion"
     compile "com.sun.faces:jsf-api:$mojarraVersion"
     compile "com.sun.faces:jsf-impl:$mojarraVersion"
 

@@ -29,7 +29,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>org.nkey.primefaces.webflow.test.config.WebConfiguration</param-value>
+        <param-value>org.nkey.primefaces.scopes.test.config.WebConfiguration</param-value>
     </context-param>
 
     <listener>
