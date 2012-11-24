@@ -8,6 +8,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.PostConstructViewMapEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.ViewMapListener;
+import java.lang.ref.WeakReference;
 
 /**
  * @author Michail Nikolaev ate: 21.11.12 Time: 0:37
@@ -17,18 +18,18 @@ public class ViewScopeViewMapListener implements ViewMapListener {
     private String name;
     private Runnable callback;
     private boolean callbackCalled = false;
-    private UIViewRoot root;
+    private WeakReference<UIViewRoot> uiViewRootWeakReference;
     private ViewScope viewScope;
 
     public ViewScopeViewMapListener(UIViewRoot root, String name, Runnable callback, ViewScope viewScope) {
         this.name = name;
         this.callback = callback;
-        this.root = root;
+        this.uiViewRootWeakReference = new WeakReference<>(root);
         this.viewScope = viewScope;
     }
 
     @Override
-    synchronized public void processEvent(SystemEvent event) throws AbortProcessingException {
+    public void processEvent(SystemEvent event) throws AbortProcessingException {
         if (event instanceof PostConstructViewMapEvent) {
             LOGGER.debug("Going call callback for bean {}", name);
             doCallback();
@@ -36,7 +37,15 @@ public class ViewScopeViewMapListener implements ViewMapListener {
         }
     }
 
-    public void doCallback() {
+    public boolean checkRoot() {
+        if (uiViewRootWeakReference.get() == null) {
+            doCallback();
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized void doCallback() {
         LOGGER.debug("Going call callback for bean {}", name);
         if (!callbackCalled) {
             try {
@@ -49,6 +58,6 @@ public class ViewScopeViewMapListener implements ViewMapListener {
 
     @Override
     public boolean isListenerForSource(Object source) {
-        return (source == root);
+        return (source == uiViewRootWeakReference);
     }
 }

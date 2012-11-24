@@ -61,11 +61,23 @@ public class ViewScope implements Scope, Serializable, HttpSessionBindingListene
         viewRoot.subscribeToViewEvent(PreDestroyViewMapEvent.class, listener);
 
         HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        final Set<ViewScopeViewMapListener> sessionListeners;
         synchronized (sessionToListeners) {
             if (!sessionToListeners.containsKey(httpSession)) {
                 sessionToListeners.put(httpSession, new HashSet<ViewScopeViewMapListener>());
             }
-            sessionToListeners.get(httpSession).add(listener);
+            sessionListeners = sessionToListeners.get(httpSession);
+        }
+        //noinspection SynchronizationOnLocalVariableOrMethodParameter
+        synchronized (sessionListeners) {
+            Set<ViewScopeViewMapListener> toRemove = new HashSet<>();
+            for (ViewScopeViewMapListener viewMapListener : sessionListeners) {
+                if (viewMapListener.checkRoot()) {
+                    toRemove.add(viewMapListener);
+                }
+            }
+            sessionListeners.removeAll(toRemove);
+            sessionListeners.add(listener);
         }
         if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("sessionBindingListener")) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionBindingListener", this);
@@ -86,13 +98,18 @@ public class ViewScope implements Scope, Serializable, HttpSessionBindingListene
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         LOGGER.debug("Session event unbound {}", event.getName());
+        final Set<ViewScopeViewMapListener> listeners;
         synchronized (sessionToListeners) {
             if (sessionToListeners.containsKey(event.getSession())) {
-                Set<ViewScopeViewMapListener> listeners = sessionToListeners.get(event.getSession());
+                listeners = sessionToListeners.get(event.getSession());
                 sessionToListeners.remove(event.getSession());
-                for (ViewScopeViewMapListener listener : listeners) {
-                    listener.doCallback();
-                }
+            } else {
+                listeners = null;
+            }
+        }
+        if (listeners != null) {
+            for (ViewScopeViewMapListener listener : listeners) {
+                listener.doCallback();
             }
         }
     }
