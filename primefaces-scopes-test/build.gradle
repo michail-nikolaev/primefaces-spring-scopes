@@ -25,7 +25,6 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: "$springVersion"
     compile group: 'org.springframework', name: 'spring-aspects', version: "$springVersion"
 
-//    compile group: 'org.springframework.scopes', name: 'spring-scopes', version: "$webflowVersion"
     compile "com.sun.faces:jsf-api:$mojarraVersion"
     compile "com.sun.faces:jsf-impl:$mojarraVersion"
 
@@ -38,4 +37,7 @@ dependencies {
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
         exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
     }
+
+    providedCompile 'javax.servlet:servlet-api:2.5'
+
 }

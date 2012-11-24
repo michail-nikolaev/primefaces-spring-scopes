@@ -20,7 +20,6 @@ import java.util.List;
 public class TableBean implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableBean.class);
     private Integer counter = 0;
-
     @Inject
     private CarRepository carRepository;
 
@@ -37,11 +36,11 @@ public class TableBean implements Serializable {
         return counter;
     }
 
-    public void increment() {
-        counter++;
-    }
-
     public void setCounter(Integer counter) {
         this.counter = counter;
+    }
+
+    public void increment() {
+        counter++;
     }
 }

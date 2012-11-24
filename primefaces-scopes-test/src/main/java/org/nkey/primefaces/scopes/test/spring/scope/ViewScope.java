@@ -7,17 +7,22 @@ import org.springframework.beans.factory.config.Scope;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.PreDestroyViewMapEvent;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.ViewMapListener;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * @author m.nikolaev Date: 21.11.12 Time: 0:37
  */
-public class ViewScope implements Scope {
+public class ViewScope implements Scope, Serializable, HttpSessionBindingListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(ViewScope.class);
+    private final WeakHashMap<HttpSession, Set<ViewScopeViewMapListener>> sessionToListeners = new WeakHashMap<>();
 
     @Override
     public Object get(String name, ObjectFactory objectFactory) {
@@ -47,28 +52,61 @@ public class ViewScope implements Scope {
     }
 
     @Override
-    public void registerDestructionCallback(final String name, final Runnable callback) {
+    public void registerDestructionCallback(String name, Runnable callback) {
         LOGGER.debug("registerDestructionCallback for bean {}", name);
-        final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        ViewMapListener listener = new ViewMapListener() {
-            @Override
-            public void processEvent(SystemEvent event) throws AbortProcessingException {
-                LOGGER.debug("destroyed view bean {}", name);
-                callback.run();
-                viewRoot.unsubscribeFromViewEvent(PreDestroyViewMapEvent.class, this);
-            }
-
-            @Override
-            public boolean isListenerForSource(Object source) {
-                return source == viewRoot;
-            }
-        };
+        UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+        ViewScopeViewMapListener listener =
+                new ViewScopeViewMapListener(viewRoot, name, callback, this);
 
         viewRoot.subscribeToViewEvent(PreDestroyViewMapEvent.class, listener);
+
+        HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        synchronized (sessionToListeners) {
+            if (!sessionToListeners.containsKey(httpSession)) {
+                sessionToListeners.put(httpSession, new HashSet<ViewScopeViewMapListener>());
+            }
+            sessionToListeners.get(httpSession).add(listener);
+        }
+        if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("sessionBindingListener")) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionBindingListener", this);
+        }
+
     }
 
     @Override
     public Object resolveContextualObject(String key) {
         return null;
     }
+
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        LOGGER.debug("Session event bound {}", event.getName());
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        LOGGER.debug("Session event unbound {}", event.getName());
+        synchronized (sessionToListeners) {
+            if (sessionToListeners.containsKey(event.getSession())) {
+                Set<ViewScopeViewMapListener> listeners = sessionToListeners.get(event.getSession());
+                sessionToListeners.remove(event.getSession());
+                for (ViewScopeViewMapListener listener : listeners) {
+                    listener.doCallback();
+                }
+            }
+        }
+    }
+
+    public void clearFromListener(ViewScopeViewMapListener listener) {
+        LOGGER.debug("Removing listener from map");
+        HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (httpSession != null) {
+            synchronized (sessionToListeners) {
+                if (sessionToListeners.containsKey(httpSession)) {
+                    sessionToListeners.get(httpSession).remove(listener);
+                }
+            }
+        }
+    }
+
 }
