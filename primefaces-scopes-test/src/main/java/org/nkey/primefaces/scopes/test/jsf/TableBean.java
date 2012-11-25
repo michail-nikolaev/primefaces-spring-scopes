@@ -2,7 +2,7 @@ package org.nkey.primefaces.scopes.test.jsf;
 
 import org.nkey.primefaces.scopes.test.spring.Car;
 import org.nkey.primefaces.scopes.test.spring.CarRepository;
-import org.nkey.primefaces.scopes.test.spring.scope.ViewsScopedComponent;
+import org.nkey.primefaces.scopes.test.spring.scope.SpringViewScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author m.nikolaev Date: 20.11.12 Time: 22:48
  */
-@ViewsScopedComponent
+@SpringViewScoped
 @Component
 public class TableBean implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableBean.class);

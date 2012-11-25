@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Scope("view")
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ViewsScopedComponent {
+public @interface SpringViewScoped {
 }
