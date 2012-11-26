@@ -10,6 +10,7 @@
 
 
         <p:panel id="counterPanel">
+            <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
             <h:outputText value="#{tableBean.counter}"/>
             <p:commandButton  icon="ui-icon-update" value="Update" action="#{tableBean.increment()}" update="counterPanel"/>
         </p:panel>
