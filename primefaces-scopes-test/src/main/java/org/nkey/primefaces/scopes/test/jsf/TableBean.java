@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,6 +31,11 @@ public class TableBean implements Serializable {
 
     @PreDestroy
     public void clean() {
-        LOGGER.debug("Clean called for VewScope");
+        LOGGER.debug("Clean called for RequestScope");
+    }
+
+    public void invalidateSession() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesContext.getCurrentInstance().setViewRoot(null);
     }
 }

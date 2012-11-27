@@ -11,13 +11,13 @@
             <!--@elvariable id="numberHolder" type="org.nkey.primefaces.scopes.test.jsf.NumberHolder"-->
             <p:outputLabel for="incrementButton" value="@SpringViewScoped "/>
             <h:outputText value="#{numberHolder.counter}"/>
-            <p:commandButton icon="ui-icon-update" value="Update" action="#{numberHolder.increment()}"
+            <p:commandButton value="Update" action="#{numberHolder.increment()}"
                              update="counterPanel" id="incrementButton"/>
         </p:panel>
     </h:form>
     <h:form prependId="false">
-
         <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
+        <p:commandButton value="Invalidate Session" action="#{tableBean.invalidateSession()}"/>
         <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
                      paginator="true" rows="10"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

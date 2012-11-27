@@ -1,8 +1,11 @@
 package org.nkey.primefaces.scopes.test.jsf;
 
 import org.nkey.primefaces.scopes.test.spring.scope.SpringViewScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.io.Serializable;
 
 /**
@@ -13,6 +16,7 @@ import java.io.Serializable;
 @Component
 @SpringViewScoped
 public class NumberHolder implements Serializable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NumberHolder.class);
     private Integer counter = 0;
 
     public Integer getCounter() {
@@ -25,5 +29,10 @@ public class NumberHolder implements Serializable {
 
     public void increment() {
         counter++;
+    }
+
+    @PreDestroy
+    public void clean() {
+        LOGGER.debug("Clean called for VewScope");
     }
 }
