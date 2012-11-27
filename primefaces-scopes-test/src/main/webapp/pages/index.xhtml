@@ -7,41 +7,47 @@
 </h:head>
 <h:body>
     <h:form prependId="false">
-
-
         <p:panel id="counterPanel">
-            <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
-            <h:outputText value="#{tableBean.counter}"/>
-            <p:commandButton  icon="ui-icon-update" value="Update" action="#{tableBean.increment()}" update="counterPanel"/>
+            <!--@elvariable id="numberHolder" type="org.nkey.primefaces.scopes.test.jsf.NumberHolder"-->
+            <p:outputLabel for="incrementButton" value="@SpringViewScoped "/>
+            <h:outputText value="#{numberHolder.counter}"/>
+            <p:commandButton icon="ui-icon-update" value="Update" action="#{numberHolder.increment()}"
+                             update="counterPanel" id="incrementButton"/>
         </p:panel>
+    </h:form>
+    <h:form prependId="false">
 
         <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
         <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
                      paginator="true" rows="10"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
-            <p:column>
+            <f:facet name="header">
+                @SpringRequestScoped
+            </f:facet>
+
+            <p:column sortBy="#{car.model}">
                 <f:facet name="header">
                     <h:outputText value="Model"/>
                 </f:facet>
                 <h:outputText value="#{car.model}"/>
             </p:column>
 
-            <p:column>
+            <p:column sortBy="#{car.year}">
                 <f:facet name="header">
                     <h:outputText value="Year"/>
                 </f:facet>
                 <h:outputText value="#{car.year}"/>
             </p:column>
 
-            <p:column>
+            <p:column sortBy="#{car.manufacturer}">
                 <f:facet name="header">
                     <h:outputText value="Manufacturer"/>
                 </f:facet>
                 <h:outputText value="#{car.manufacturer}"/>
             </p:column>
 
-            <p:column>
+            <p:column sortBy="#{car.color}">
                 <f:facet name="header">
                     <h:outputText value="Color"/>
                 </f:facet>

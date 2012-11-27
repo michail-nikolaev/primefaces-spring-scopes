@@ -7,8 +7,11 @@
         version="2.0">
 
     <application>
+        <state-manager>org.nkey.primefaces.scopes.test.spring.StateManagerWithStatelessSupport</state-manager>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
     </application>
+
+
 
     <!--<application>-->
     <!--<navigation-handler>org.springframework.scopes.executor.jsf.FlowNavigationHandler</navigation-handler>-->

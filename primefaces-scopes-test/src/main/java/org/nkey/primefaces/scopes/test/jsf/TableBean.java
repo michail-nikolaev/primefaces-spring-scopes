@@ -2,7 +2,7 @@ package org.nkey.primefaces.scopes.test.jsf;
 
 import org.nkey.primefaces.scopes.test.spring.Car;
 import org.nkey.primefaces.scopes.test.spring.CarRepository;
-import org.nkey.primefaces.scopes.test.spring.scope.SpringViewScoped;
+import org.nkey.primefaces.scopes.test.spring.scope.SpringRequestScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,10 @@ import java.util.List;
  * @author m.nikolaev Date: 20.11.12 Time: 22:48
  */
 @SuppressWarnings("SpringJavaAutowiringInspection")
-@SpringViewScoped
+@SpringRequestScoped
 @Component
 public class TableBean implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableBean.class);
-    private Integer counter = 0;
     @Inject
     private CarRepository carRepository;
 
@@ -31,17 +30,5 @@ public class TableBean implements Serializable {
     @PreDestroy
     public void clean() {
         LOGGER.debug("Clean called for VewScope");
-    }
-
-    public Integer getCounter() {
-        return counter;
-    }
-
-    public void setCounter(Integer counter) {
-        this.counter = counter;
-    }
-
-    public void increment() {
-        counter++;
     }
 }

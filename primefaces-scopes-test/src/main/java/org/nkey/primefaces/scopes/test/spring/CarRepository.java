@@ -14,6 +14,7 @@ import java.util.UUID;
 public class CarRepository {
     private String[] colors;
     private String[] manufacturers;
+    private List<Car> cars = new ArrayList<>();
 
     @PostConstruct
     private void init() {
@@ -40,6 +41,8 @@ public class CarRepository {
         manufacturers[7] = "Chrysler";
         manufacturers[8] = "Ferrari";
         manufacturers[9] = "Ford";
+
+        populateRandomCars(cars, 500);
     }
 
     private void populateRandomCars(List<Car> list, int size) {
@@ -64,12 +67,7 @@ public class CarRepository {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    List<Car> cars = new ArrayList<>();
-
     public List<Car> getRandomCars() {
-        //List<Car> cars = new ArrayList<>();
-        if (cars.isEmpty())
-        populateRandomCars(cars, 50);
         return cars;
     }
 }
