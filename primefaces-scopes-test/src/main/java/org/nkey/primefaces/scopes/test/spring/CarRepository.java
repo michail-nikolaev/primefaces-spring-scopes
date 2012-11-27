@@ -64,8 +64,11 @@ public class CarRepository {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
+    List<Car> cars = new ArrayList<>();
+
     public List<Car> getRandomCars() {
-        List<Car> cars = new ArrayList<>();
+        //List<Car> cars = new ArrayList<>();
+        if (cars.isEmpty())
         populateRandomCars(cars, 50);
         return cars;
     }

@@ -1,4 +1,5 @@
 primefaces-spring-scopes
 =========================
 
-Test for primefaces together with Spring and View and Flash scopes without memory leaks.
+Test for Primefaces together with Spring and View, Session and Request scopes without memory leaks.
+You also may use Request scopes to build stateless views.

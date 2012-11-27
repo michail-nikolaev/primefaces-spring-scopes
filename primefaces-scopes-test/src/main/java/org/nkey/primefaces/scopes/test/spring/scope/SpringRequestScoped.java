@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  * @author m.nikolaev Date: 21.11.12 Time: 1:01
  */
 @Qualifier
-@Scope("view")
+@Scope("request")
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SpringViewScoped {
+public @interface SpringRequestScoped {
 }
