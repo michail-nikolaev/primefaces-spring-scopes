@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * @author m.nikolaev Date: 20.11.12 Time: 22:48
  */
+@SuppressWarnings("SpringJavaAutowiringInspection")
 @SpringViewScoped
 @Component
 public class TableBean implements Serializable {
