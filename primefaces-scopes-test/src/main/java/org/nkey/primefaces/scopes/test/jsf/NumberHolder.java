@@ -3,6 +3,8 @@ package org.nkey.primefaces.scopes.test.jsf;
 import org.nkey.primefaces.scopes.test.spring.scope.SpringViewScoped;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * ViewScoped bean example.
  *
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @SpringViewScoped
-public class NumberHolder {
+public class NumberHolder implements Serializable {
     private Integer counter = 0;
 
     public Integer getCounter() {
