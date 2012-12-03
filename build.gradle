@@ -1,6 +1,18 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
+idea {
+    project {
+        jdkName = '1.7'
+        languageLevel = '1.7'
+        ipr {
+            withXml { provider ->
+                provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+            }
+        }
+    }
+}
+
 sourceCompatibility = 1.7
 
 ext {
