@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author m.nikolaev Date: 20.11.12 Time: 22:48
  */
-@SuppressWarnings("SpringJavaAutowiringInspection")
 @SpringRequestScoped
 @Component
 public class TableBean implements Serializable {
