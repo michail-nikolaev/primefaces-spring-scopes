@@ -18,10 +18,11 @@
     <h:form prependId="false">
         <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
         <p:commandButton value="Invalidate Session" action="#{tableBean.invalidateSession()}"/>
-        <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
+        <p:dataTable id="dataTable" var="car" value="#{tableBean.carsModel}"
                      paginator="true" rows="10"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="5,10,15">
+                     rowsPerPageTemplate="5,10,15"
+                     lazy="true">
             <f:facet name="header">
                 @SpringRequestScoped
             </f:facet>
@@ -56,5 +57,15 @@
         </p:dataTable>
 
     </h:form>
+
+    <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+        <f:facet name="start">
+            <p:graphicImage value="/images/loading.gif" />
+        </f:facet>
+
+        <f:facet name="complete">
+            <h:outputText value="" />
+        </f:facet>
+    </p:ajaxStatus>
 </h:body>
 </html>
