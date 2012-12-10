@@ -1,4 +1,4 @@
-package org.nkey.primefaces.scopes.test.jsf;
+package org.nkey.primefaces.scopes.test.repository.lazymodel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.LazyDataModel;
@@ -16,12 +16,8 @@ import java.util.Map;
  *         Date: 06.12.12
  *         Time: 22:45
  */
-public class SpringDataJPALazyDataModel<T extends SpringDataJPALazyDataModel.IDProvider> extends LazyDataModel<T> {
+public class SpringDataJPALazyDataModel<T extends IdProvider> extends LazyDataModel<T> {
     private JpaRepository<T, Long> repository;
-
-    public static interface IDProvider<ID extends Serializable> {
-        ID getId();
-    }
 
     public SpringDataJPALazyDataModel(JpaRepository<T, Long> repository) {
         this.repository = repository;

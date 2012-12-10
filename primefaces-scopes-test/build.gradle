@@ -34,6 +34,7 @@ dependencies {
 
     compile "org.hibernate:hibernate-entitymanager:$hibernateVersion"
     compile "org.hibernate:hibernate-c3p0:$hibernateVersion"
+    compile "org.hibernate:hibernate-search:4.1.1.Final"
 
     compile "com.sun.faces:jsf-api:$mojarraVersion"
     compile "com.sun.faces:jsf-impl:$mojarraVersion"

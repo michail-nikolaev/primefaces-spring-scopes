@@ -1,7 +1,9 @@
 package org.nkey.primefaces.scopes.test.jsf;
 
+import org.hibernate.search.jpa.FullTextEntityManager;
 import org.nkey.primefaces.scopes.test.domain.Car;
 import org.nkey.primefaces.scopes.test.repository.CarRepository;
+import org.nkey.primefaces.scopes.test.repository.lazymodel.HibernateSearchLazyDataModel;
 import org.nkey.primefaces.scopes.test.spring.scope.SpringRequestScoped;
 import org.primefaces.model.LazyDataModel;
 import org.slf4j.Logger;
@@ -23,6 +25,8 @@ public class TableBean implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableBean.class);
     @Inject
     private CarRepository carRepository;
+    @Inject
+    private FullTextEntityManager fullTextEntityManager;
     private LazyDataModel<Car> carLazyDataModel;
 
     public LazyDataModel<Car> getCarsModel() {
@@ -31,7 +35,7 @@ public class TableBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        carLazyDataModel = new SpringDataJPALazyDataModel<>(carRepository);
+        carLazyDataModel = new HibernateSearchLazyDataModel<>(fullTextEntityManager, Car.class);
     }
 
     @PreDestroy

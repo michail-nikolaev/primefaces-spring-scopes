@@ -27,32 +27,39 @@
                 @SpringRequestScoped
             </f:facet>
 
-            <p:column sortBy="#{car.model}">
+            <p:column sortBy="#{car.model}" filterBy="#{car.model}">
                 <f:facet name="header">
                     <h:outputText value="Model"/>
                 </f:facet>
                 <h:outputText value="#{car.model}"/>
             </p:column>
 
-            <p:column sortBy="#{car.year}">
+            <p:column sortBy="#{car.year}" filterBy="#{car.year}">
                 <f:facet name="header">
                     <h:outputText value="Year"/>
                 </f:facet>
                 <h:outputText value="#{car.year}"/>
             </p:column>
 
-            <p:column sortBy="#{car.manufacturer}">
+            <p:column sortBy="#{car.manufacturer}" filterBy="#{car.manufacturer}">
                 <f:facet name="header">
                     <h:outputText value="Manufacturer"/>
                 </f:facet>
                 <h:outputText value="#{car.manufacturer}"/>
             </p:column>
 
-            <p:column sortBy="#{car.color}">
+            <p:column sortBy="#{car.color}" filterBy="#{car.color}">
                 <f:facet name="header">
                     <h:outputText value="Color"/>
                 </f:facet>
                 <h:outputText value="#{car.color}"/>
+            </p:column>
+
+            <p:column sortBy="#{car.description}" filterBy="#{car.description}">
+                <f:facet name="header">
+                    <h:outputText value="Description"/>
+                </f:facet>
+                <h:outputText value="#{car.description}"/>
             </p:column>
         </p:dataTable>
 

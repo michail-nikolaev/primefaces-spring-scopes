@@ -1,30 +1,42 @@
 package org.nkey.primefaces.scopes.test.domain;
 
-import org.nkey.primefaces.scopes.test.jsf.SpringDataJPALazyDataModel;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.nkey.primefaces.scopes.test.repository.lazymodel.IdProvider;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
  * @author m.nikolaev Date: 20.11.12 Time: 22:49
  */
 @Entity
-public class Car implements Serializable, SpringDataJPALazyDataModel.IDProvider {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Indexed
+public class Car implements Serializable, IdProvider {
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column
+    @Column @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String model;
-    @Column
+    @Column @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
     private Integer year;
-    @Column
+    @Column @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String manufacturer;
-    @Column
+    @Column @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String color;
+
+    @Transient
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    public String getDescription() {
+        return String.format("%s %s %s %s", model, year, color, manufacturer);
+    }
 
     public Car() {
     }
