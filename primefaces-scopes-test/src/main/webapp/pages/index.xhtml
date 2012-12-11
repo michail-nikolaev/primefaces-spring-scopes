@@ -1,9 +1,17 @@
+<!DOCTYPE html>
+<!--suppress XmlUnusedNamespaceDeclaration -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:function="http://primefaces.nkey.org/functions"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Spring and Primefaces</title>
+    <style type="text/css">
+        .ui-widget,.ui-widget .ui-widget {
+            font-size: 90% !important;
+        }
+    </style>
 </h:head>
 <h:body>
     <h:form prependId="false">
@@ -18,60 +26,37 @@
     <h:form prependId="false">
         <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
         <p:commandButton value="Invalidate Session" action="#{tableBean.invalidateSession()}"/>
-        <p:dataTable id="dataTable" var="car" value="#{tableBean.carsModel}"
-                     paginator="true" rows="10"
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="5,10,15"
-                     lazy="true">
-            <f:facet name="header">
-                @SpringRequestScoped
-            </f:facet>
 
-            <p:column sortBy="#{car.model}" filterBy="#{car.model}">
+            <p:dataTable id="dataTable" var="car" value="#{tableBean.carsModel}"  widgetVar="carsTable"
+                         paginator="true" rows="50"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="50,100"
+                         lazy="true">
                 <f:facet name="header">
-                    <h:outputText value="Model"/>
+                    @SpringRequestScoped
+                    <p:outputPanel>
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="carsTable.filter()" style="width:150px" />
+                    </p:outputPanel>
                 </f:facet>
-                <h:outputText value="#{car.model}"/>
-            </p:column>
 
-            <p:column sortBy="#{car.year}" filterBy="#{car.year}">
-                <f:facet name="header">
-                    <h:outputText value="Year"/>
-                </f:facet>
-                <h:outputText value="#{car.year}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.manufacturer}" filterBy="#{car.manufacturer}">
-                <f:facet name="header">
-                    <h:outputText value="Manufacturer"/>
-                </f:facet>
-                <h:outputText value="#{car.manufacturer}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.color}" filterBy="#{car.color}">
-                <f:facet name="header">
-                    <h:outputText value="Color"/>
-                </f:facet>
-                <h:outputText value="#{car.color}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.description}" filterBy="#{car.description}">
-                <f:facet name="header">
-                    <h:outputText value="Description"/>
-                </f:facet>
-                <h:outputText value="#{car.description}"/>
-            </p:column>
-        </p:dataTable>
-
+                <p:columns value="#{tableBean.columns}" var="column" sortBy="#{car[column.order]}"
+                           style="text-align: center">
+                    <f:facet name="header">
+                        <h:outputText value="#{column.header}" escape="false"/>
+                    </f:facet>
+                    <h:outputText value="#{column.value}" escape="false"/>
+                </p:columns>
+            </p:dataTable>
     </h:form>
 
     <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
         <f:facet name="start">
-            <p:graphicImage value="/images/loading.gif" />
+            <h:outputText value="Ajax..."/>
         </f:facet>
 
         <f:facet name="complete">
-            <h:outputText value="" />
+            <h:outputText value="Ready"/>
         </f:facet>
     </p:ajaxStatus>
 </h:body>

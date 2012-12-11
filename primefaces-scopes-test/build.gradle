@@ -38,10 +38,12 @@ dependencies {
 
     compile "com.sun.faces:jsf-api:$mojarraVersion"
     compile "com.sun.faces:jsf-impl:$mojarraVersion"
+    providedCompile "javax.el:el-api:2.2"
 
     compile 'cglib:cglib-nodep:2.2'
 
     compile "org.primefaces:primefaces:$primefacesVersion"
+    compile "org.primefaces.themes:cruze:1.0.8"
 
     compile ":ojdbc6:11.2.0.3"
 

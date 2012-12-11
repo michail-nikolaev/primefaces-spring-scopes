@@ -18,6 +18,7 @@ import java.io.Serializable;
 /**
  * @author m.nikolaev Date: 20.11.12 Time: 22:49
  */
+@SuppressWarnings("unused")
 @Entity
 @Indexed
 public class Car implements Serializable, IdProvider {

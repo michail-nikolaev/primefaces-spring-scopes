@@ -10,6 +10,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,11 +20,15 @@ import java.util.Map;
 public class HibernateSearchLazyDataModel<T extends IdProvider> extends LazyDataModel<T> {
     private FullTextEntityManager fullTextEntityManager;
     private Class<T> clazz;
+    private String globalFilterProperty;
+    private static final String GLOBAL_FILTER = "globalFilter";
 
 
-    public HibernateSearchLazyDataModel(FullTextEntityManager fullTextEntityManager, Class<T> clazz) {
+    public HibernateSearchLazyDataModel(FullTextEntityManager fullTextEntityManager, Class<T> clazz,
+                                        String globalFilterProperty) {
         this.fullTextEntityManager = fullTextEntityManager;
         this.clazz = clazz;
+        this.globalFilterProperty = globalFilterProperty;
     }
 
     @Override
@@ -47,6 +52,9 @@ public class HibernateSearchLazyDataModel<T extends IdProvider> extends LazyData
         if (filters != null && !filters.isEmpty()) {
             for (Map.Entry<String, String> entry : filters.entrySet()) {
                 String field = entry.getKey();
+                if (GLOBAL_FILTER.equals(field)) {
+                    field = globalFilterProperty;
+                }
                 String value = entry.getValue();
                 if (StringUtils.isNotBlank(field) && StringUtils.isNotBlank(value)) {
                     Query queryPart = queryBuilder.keyword().wildcard().onField(field)
@@ -59,7 +67,12 @@ public class HibernateSearchLazyDataModel<T extends IdProvider> extends LazyData
 
         FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, clazz);
         if (sortOrder != SortOrder.UNSORTED && StringUtils.isNotBlank(sortField)) {
-            Sort sort = new Sort(new SortField(sortField, SortField.STRING, sortOrder != SortOrder.ASCENDING));
+            String[] sorts = sortField.split(";", -1);
+            List<SortField> sortFields = new ArrayList<>();
+            for (String sort : sorts) {
+                sortFields.add(new SortField(sort, SortField.STRING, sortOrder != SortOrder.ASCENDING));
+            }
+            Sort sort = new Sort(sortFields.toArray(new SortField[sortFields.size()]));
             fullTextQuery = fullTextQuery.setSort(sort);
         }
         javax.persistence.Query query = fullTextQuery.setMaxResults(pageSize);
