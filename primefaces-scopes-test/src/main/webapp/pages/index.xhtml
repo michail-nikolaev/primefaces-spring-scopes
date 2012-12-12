@@ -40,6 +40,7 @@
                         function updateFilter() {
                             $(globalFilter.jqId).val($(globalFilterAutoCompleate.input).val());
                             carsTable.filter();
+                            //$(carsTable.jqId).find("th[role=columnheader]").next(".ui-state-active").click();
                         }
                     </h:outputScript>
                     <p:inputText widgetVar="globalFilter" id="globalFilter" style="display: none"/>
