@@ -54,6 +54,10 @@ public class TableBean implements Serializable {
         FacesContext.getCurrentInstance().setViewRoot(null);
     }
 
+    public List<String> autoComplete(String value) {
+        return carRepository.getModels("%" + value + "%");
+    }
+
 
     @SuppressWarnings("UnusedDeclaration")
     public static class ColumnModel {
@@ -95,8 +99,9 @@ public class TableBean implements Serializable {
     }
 
     public List<ColumnModel> getColumns() {
-        return Arrays.asList(new ColumnModel("Year <br/> Model", "#{function:concat2(car.year, car.model)}", "year;model"),
-                new ColumnModel("Color", "#{car.color}", "color"),
-                new ColumnModel("Manufacturer", "#{car.manufacturer}", "manufacturer"));
+        return Arrays
+                .asList(new ColumnModel("Year <br/> Model", "#{function:concat2(car.year, car.model)}", "year;model"),
+                        new ColumnModel("Color", "#{car.color}", "color"),
+                        new ColumnModel("Manufacturer", "#{car.manufacturer}", "manufacturer"));
     }
 }
