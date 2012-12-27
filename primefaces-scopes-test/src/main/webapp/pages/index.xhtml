@@ -1,9 +1,17 @@
+<!DOCTYPE html>
+<!--suppress XmlUnusedNamespaceDeclaration -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:function="http://primefaces.nkey.org/functions"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Spring and Primefaces</title>
+    <style type="text/css">
+        .ui-widget, .ui-widget .ui-widget {
+            font-size: 90% !important;
+        }
+    </style>
 </h:head>
 <h:body>
     <h:form prependId="false">
@@ -18,43 +26,51 @@
     <h:form prependId="false">
         <!--@elvariable id="tableBean" type="org.nkey.primefaces.scopes.test.jsf.TableBean"-->
         <p:commandButton value="Invalidate Session" action="#{tableBean.invalidateSession()}"/>
-        <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}"
-                     paginator="true" rows="10"
+
+        <p:dataTable id="dataTable" var="car" value="#{tableBean.carsModel}" widgetVar="carsTable"
+                     paginator="true" rows="50"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="5,10,15">
+                     rowsPerPageTemplate="50,100"
+                     lazy="true">
             <f:facet name="header">
                 @SpringRequestScoped
+                <p:outputPanel>
+                    <h:outputText value="Search all fields:"/>
+                    <h:outputScript>
+                        function updateFilter() {
+                            $(globalFilter.jqId).val($(globalFilterAutoCompleate.input).val());
+                            carsTable.filter();
+                            //$(carsTable.jqId).find("th[role=columnheader]").next(".ui-state-active").click();
+                        }
+                    </h:outputScript>
+                    <p:inputText widgetVar="globalFilter" id="globalFilter" style="display: none"/>
+                    <p:autoComplete id="globalFilterAutoCompleate" widgetVar="globalFilterAutoCompleate"
+                                    onkeyup="updateFilter()" onstart="updateFilter()"
+                                    minQueryLength="2" style="width:150px" maxResults="100"
+                                    completeMethod="#{tableBean.autoComplete}" scrollHeight="200">
+                        <p:ajax event="itemSelect" onsuccess="updateFilter()"/>
+                    </p:autoComplete>
+                </p:outputPanel>
             </f:facet>
 
-            <p:column sortBy="#{car.model}">
+            <p:columns value="#{tableBean.columns}" var="column" sortBy="#{car[column.order]}"
+                       style="text-align: center">
                 <f:facet name="header">
-                    <h:outputText value="Model"/>
+                    <h:outputText value="#{column.header}" escape="false"/>
                 </f:facet>
-                <h:outputText value="#{car.model}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.year}">
-                <f:facet name="header">
-                    <h:outputText value="Year"/>
-                </f:facet>
-                <h:outputText value="#{car.year}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.manufacturer}">
-                <f:facet name="header">
-                    <h:outputText value="Manufacturer"/>
-                </f:facet>
-                <h:outputText value="#{car.manufacturer}"/>
-            </p:column>
-
-            <p:column sortBy="#{car.color}">
-                <f:facet name="header">
-                    <h:outputText value="Color"/>
-                </f:facet>
-                <h:outputText value="#{car.color}"/>
-            </p:column>
+                <h:outputText value="#{column.value}" escape="false"/>
+            </p:columns>
         </p:dataTable>
-
     </h:form>
+
+    <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+        <f:facet name="start">
+            <h:outputText value="Ajax..."/>
+        </f:facet>
+
+        <f:facet name="complete">
+            <h:outputText value="Ready"/>
+        </f:facet>
+    </p:ajaxStatus>
 </h:body>
 </html>

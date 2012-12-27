@@ -1,14 +1,10 @@
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
 #idea files
 *.iml
 *.ipr
 *.iws
+*.ids
 
 #gradle build dirs
 .gradle

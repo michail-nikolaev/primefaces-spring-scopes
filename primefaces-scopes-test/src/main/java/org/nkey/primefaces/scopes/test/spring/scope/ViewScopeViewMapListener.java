@@ -58,6 +58,6 @@ public class ViewScopeViewMapListener implements ViewMapListener {
 
     @Override
     public boolean isListenerForSource(Object source) {
-        return (source == uiViewRootWeakReference);
+        return (source == uiViewRootWeakReference.get());
     }
 }

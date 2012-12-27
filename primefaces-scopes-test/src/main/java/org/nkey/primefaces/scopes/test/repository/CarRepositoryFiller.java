@@ -1,8 +1,10 @@
-package org.nkey.primefaces.scopes.test.spring;
+package org.nkey.primefaces.scopes.test.repository;
 
-import org.springframework.stereotype.Repository;
+import org.nkey.primefaces.scopes.test.domain.Car;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,11 +12,14 @@ import java.util.UUID;
 /**
  * @author m.nikolaev Date: 21.11.12 Time: 0:16
  */
-@Repository
-public class CarRepository {
+@Component
+public class CarRepositoryFiller {
     private String[] colors;
     private String[] manufacturers;
     private List<Car> cars = new ArrayList<>();
+
+    @Inject
+    private CarRepository repository;
 
     @PostConstruct
     private void init() {
@@ -42,7 +47,11 @@ public class CarRepository {
         manufacturers[8] = "Ferrari";
         manufacturers[9] = "Ford";
 
-        populateRandomCars(cars, 500);
+        populateRandomCars(cars, 50000);
+
+        if (repository.count() < 50000) {
+            repository.save(cars);
+        }
     }
 
     private void populateRandomCars(List<Car> list, int size) {

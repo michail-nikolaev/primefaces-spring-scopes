@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+        "https://facelets.dev.java.net/source/browse/*checkout*/facelets/src/etc/facelet-taglib_1_0.dtd">
+<facelet-taglib xmlns="http://java.sun.com/JSF/Facelet">
+    <namespace>http://primefaces.nkey.org/functions</namespace>
+    <function>
+        <function-name>concat2</function-name>
+        <function-class>org.nkey.primefaces.scopes.test.jsf.Functions</function-class>
+        <function-signature>
+            java.lang.String concat2(java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
+</facelet-taglib>
