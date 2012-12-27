@@ -53,4 +53,8 @@ subprojects {
 
     group = 'org.nkey.primefaces.scopes.test'
     version = '0.1-SNAPSHOT'
+
+    build.doLast {
+        ["     *", "    /.\\", "   /..'\\", "   /'.'\\", "  /.''.'\\", "  /.'.'.\\", " /'.''.'.\\", " ^^^[_]^^^ ",].each { println it }
+    }
 }
