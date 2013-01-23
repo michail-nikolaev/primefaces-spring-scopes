@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.event.AbortProcessingException;
-import javax.faces.event.PostConstructViewMapEvent;
+import javax.faces.event.PreDestroyViewMapEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.ViewMapListener;
 import java.lang.ref.WeakReference;
@@ -30,7 +30,7 @@ public class ViewScopeViewMapListener implements ViewMapListener {
 
     @Override
     public void processEvent(SystemEvent event) throws AbortProcessingException {
-        if (event instanceof PostConstructViewMapEvent) {
+        if (event instanceof PreDestroyViewMapEvent) {
             LOGGER.debug("Going call callback for bean {}", name);
             doCallback();
             viewScope.clearFromListener(this);
