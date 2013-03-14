@@ -1,12 +1,26 @@
 <configuration>
+    <logger name="org.springframework.beans.factory" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.context" level="WARN"/>
+    <logger name="org.hibernate.loader.Loader" level="ERROR"/>
+
+
+
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" level="OFF"/>
+    <logger name="org.hibernate.search.impl.SimpleIndexingProgressMonitor" level="WARN"/>
+    <logger name="org.springframework.orm" level="WARN"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{ISO8601} | %-5level | %thread | %logger | %m%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
+
 </configuration>
